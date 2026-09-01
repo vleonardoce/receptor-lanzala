@@ -20,7 +20,6 @@
       <path d="M100 176V217" fill="none"/>
     </g>
   </defs>
-  <rect width="200" height="225" rx="38" fill="#06110d"/>
   <use href="#leaf" fill="#00ff7810" stroke="#00ff78" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".65" filter="url(#glow)"/>
   <use href="#leaf" fill="#00ff7808" stroke="#00f5a0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   <use href="#leaf" fill="none" stroke="#eaffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
