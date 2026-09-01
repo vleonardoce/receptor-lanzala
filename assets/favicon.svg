@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 225">
+  <defs>
+    <filter id="glow" x="-55%" y="-55%" width="210%" height="210%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feFlood flood-color="#00ff78" flood-opacity=".9"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <g id="leaf">
+      <path d="M100 165C82 125 84 54 100 16C117 56 119 124 100 165Z"/>
+      <path d="M94 169C60 157 27 124 16 76C54 94 83 126 94 169Z"/>
+      <path d="M106 169C140 157 173 124 184 76C146 94 117 126 106 169Z"/>
+      <path d="M91 174C56 174 20 162 5 140C45 139 75 150 91 174Z"/>
+      <path d="M109 174C144 174 180 162 195 140C155 139 125 150 109 174Z"/>
+      <path d="M94 179C71 198 48 204 30 196C50 178 72 168 94 179Z"/>
+      <path d="M106 179C129 198 152 204 170 196C150 178 128 168 106 179Z"/>
+      <path d="M100 176V217" fill="none"/>
+    </g>
+  </defs>
+  <rect width="200" height="225" rx="38" fill="#06110d"/>
+  <use href="#leaf" fill="#00ff7810" stroke="#00ff78" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".65" filter="url(#glow)"/>
+  <use href="#leaf" fill="#00ff7808" stroke="#00f5a0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <use href="#leaf" fill="none" stroke="#eaffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
