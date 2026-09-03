@@ -384,6 +384,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 #shuffle svg {
+  width: 21px;
+  height: 21px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
