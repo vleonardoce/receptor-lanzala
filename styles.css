@@ -660,7 +660,11 @@ input[type="range"] {
 
 @media (max-width: 520px) {
   .app-shell { padding: 12px; align-items: start; }
-  .app-shell.is-entered { padding-top: 106px; }
+  .app-shell.is-entered {
+    min-height: 100svh;
+    padding-top: 106px;
+    align-items: end;
+  }
   .corner-brand { top: 12px; left: 14px; gap: 8px; }
   .neon-logo { width: 72px; opacity: .82; }
   .receptor-wordmark { width: 126px; border-radius: 10px; }
