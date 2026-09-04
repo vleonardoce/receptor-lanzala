@@ -25,6 +25,14 @@ body {
 
 body.has-expanded-video { overflow: hidden; }
 
+body.has-expanded-video .ambient-light,
+body.has-expanded-video .diagonal-smoke-layer,
+body.has-expanded-video .rafaga-layer,
+body.has-expanded-video .neon-logo-slot,
+body.has-expanded-video .receptor-wordmark {
+  display: none;
+}
+
 button, input { font: inherit; }
 
 button, a { -webkit-tap-highlight-color: transparent; }
