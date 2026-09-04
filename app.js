@@ -73,10 +73,29 @@ function formatTime(value) {
   return `${minutes}:${seconds}`;
 }
 
-function setActiveTrack(index) {
+function scrollTrackIntoView(index, behavior = "smooth") {
+  const button = ui.trackButtons[index];
+  if (!button) return;
+
+  const playlistRect = playlistElement.getBoundingClientRect();
+  const trackRect = button.getBoundingClientRect();
+  const centeredTop = playlistElement.scrollTop
+    + trackRect.top
+    - playlistRect.top
+    - (playlistElement.clientHeight - trackRect.height) / 2;
+
+  playlistElement.scrollTo({
+    top: Math.max(0, centeredTop),
+    behavior,
+  });
+}
+
+function setActiveTrack(index, shouldScroll = hasEntered) {
   ui.trackButtons.forEach((button, buttonIndex) => {
     button.classList.toggle("is-active", buttonIndex === index);
   });
+
+  if (shouldScroll) scrollTrackIntoView(index);
 }
 
 function getOriginalTrackIndex() {
@@ -193,6 +212,7 @@ function enterApplication() {
   hasEntered = true;
   ui.shell.classList.add("is-entered");
   ui.splash.setAttribute("aria-hidden", "true");
+  window.requestAnimationFrame(() => setActiveTrack(initialTrackIndex, true));
   startInitialPlayback();
 }
 
