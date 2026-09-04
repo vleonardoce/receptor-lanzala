@@ -88,6 +88,10 @@ const splashLoadTimer = window.setInterval(() => {
   splashLoadProgress = Math.min(92, splashLoadProgress + Math.max(0.6, remaining * 0.08));
   renderSplashLoadProgress(splashLoadProgress);
 }, 180);
+let playlistProbeTimer;
+const playerApiTimeout = window.setTimeout(() => {
+  if (!playerReady) showSplashRetry();
+}, 10000);
 
 function formatTime(value) {
   if (!Number.isFinite(value) || value < 0) return "0:00";
@@ -159,13 +163,36 @@ function setSplashReady() {
     ui.enter.disabled = false;
     ui.enter.setAttribute("aria-busy", "false");
     ui.enter.setAttribute("aria-label", "Entrar al reproductor");
+    delete ui.enter.dataset.action;
     ui.splashHint.textContent = "HAZ CLICK PARA INICIAR EL VIAJE";
     ui.enter.focus({ preventScroll: true });
   }, 260);
 }
 
+function showSplashRetry() {
+  window.clearInterval(splashLoadTimer);
+  window.clearInterval(playlistProbeTimer);
+  ui.enter.classList.remove("is-loading");
+  ui.enter.querySelector("span").textContent = "REINTENTAR";
+  ui.enter.querySelector("i").textContent = "↻";
+  ui.enter.disabled = false;
+  ui.enter.dataset.action = "reload";
+  ui.enter.setAttribute("aria-busy", "false");
+  ui.enter.setAttribute("aria-label", "Reintentar la carga del reproductor");
+  ui.splashHint.textContent = "YOUTUBE NO RESPONDIÓ · INTENTA DE NUEVO";
+}
+
+function completePlaylistPreparation() {
+  if (playlistPrepared) return;
+  playlistPrepared = true;
+  window.clearInterval(playlistProbeTimer);
+  setActiveTrack(initialTrackIndex);
+  setSplashReady();
+}
+
 function onPlayerReady(event) {
   playerReady = true;
+  window.clearTimeout(playerApiTimeout);
   ui.loading.classList.add("is-hidden");
   setActiveTrack(initialTrackIndex);
 
@@ -178,6 +205,14 @@ function onPlayerReady(event) {
   });
   event.target.setLoop(true);
 
+  const probeStartedAt = Date.now();
+  playlistProbeTimer = window.setInterval(() => {
+    const playlistAvailable = (player.getPlaylist?.() || []).length > 0;
+    if (playlistAvailable || Date.now() - probeStartedAt >= 7000) {
+      completePlaylistPreparation();
+    }
+  }, 250);
+
   if (hasEntered) startInitialPlayback();
 
 }
@@ -187,8 +222,18 @@ function startInitialPlayback() {
   player.setLoop(true);
   const playlist = player.getPlaylist?.() || [];
   const playlistIndex = playlist.indexOf(tracks[initialTrackIndex].id);
-  player.playVideoAt(playlistIndex >= 0 ? playlistIndex : initialTrackIndex);
-  player.playVideo();
+
+  if (playlistIndex >= 0) {
+    player.playVideoAt(playlistIndex);
+    player.playVideo();
+  } else {
+    player.loadPlaylist({
+      listType: "playlist",
+      list: PLAYLIST_ID,
+      index: initialTrackIndex,
+      startSeconds: 0,
+    });
+  }
 }
 
 function onPlayerStateChange(event) {
@@ -199,9 +244,7 @@ function onPlayerStateChange(event) {
   }
 
   if (event.data === YT.PlayerState.CUED && !playlistPrepared) {
-    playlistPrepared = true;
-    setActiveTrack(initialTrackIndex);
-    setSplashReady();
+    completePlaylistPreparation();
   }
 
   if (
@@ -270,12 +313,20 @@ function enterApplication() {
   startInitialPlayback();
 }
 
-ui.enter.addEventListener("click", enterApplication);
-ui.splash.addEventListener("click", enterApplication);
+function handleEnterRequest() {
+  if (ui.enter.dataset.action === "reload") {
+    window.location.reload();
+    return;
+  }
+  enterApplication();
+}
+
+ui.enter.addEventListener("click", handleEnterRequest);
+ui.splash.addEventListener("click", handleEnterRequest);
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" || hasEntered) return;
   event.preventDefault();
-  enterApplication();
+  handleEnterRequest();
 });
 
 ui.previous.addEventListener("click", () => playerReady && player.previousVideo());
@@ -323,4 +374,5 @@ window.setInterval(() => {
 const apiScript = document.createElement("script");
 apiScript.src = "https://www.youtube.com/iframe_api";
 apiScript.async = true;
+apiScript.addEventListener("error", showSplashRetry);
 document.head.append(apiScript);
