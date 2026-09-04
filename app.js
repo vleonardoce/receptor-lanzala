@@ -73,6 +73,7 @@ let shuffleEnabled = false;
 let isSeeking = false;
 let hasEntered = false;
 let playlistPrepared = false;
+let pendingTrackIndex = null;
 
 function formatTime(value) {
   if (!Number.isFinite(value) || value < 0) return "0:00";
@@ -109,6 +110,13 @@ function setActiveTrack(index, shouldScroll = hasEntered) {
 function getOriginalTrackIndex() {
   if (!playerReady) return 0;
   const videoId = player.getVideoData?.().video_id;
+
+  if (pendingTrackIndex !== null) {
+    const pendingVideoId = tracks[pendingTrackIndex]?.id;
+    if (videoId === pendingVideoId) pendingTrackIndex = null;
+    else return pendingTrackIndex;
+  }
+
   const indexByVideoId = tracks.findIndex((track) => track.id === videoId);
   if (indexByVideoId >= 0) return indexByVideoId;
 
@@ -183,6 +191,7 @@ function onPlayerStateChange(event) {
 }
 
 function onPlayerError() {
+  pendingTrackIndex = null;
   ui.loading.classList.remove("is-hidden");
   ui.loading.querySelector("span:last-child").textContent = "YouTube no pudo cargar este video";
 }
@@ -213,6 +222,9 @@ function playTrack(originalIndex) {
   const currentPlaylist = player.getPlaylist?.() || [];
   const wantedId = tracks[originalIndex]?.id;
   const currentIndex = currentPlaylist.indexOf(wantedId);
+
+  pendingTrackIndex = originalIndex;
+  setActiveTrack(originalIndex);
 
   if (currentIndex >= 0) player.playVideoAt(currentIndex);
   else if (wantedId) player.loadVideoById(wantedId);
