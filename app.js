@@ -52,6 +52,7 @@ tracks.forEach((track, index) => {
 
 const ui = {
   shell: document.querySelector(".app-shell"),
+  playerCard: document.querySelector(".player-card"),
   splash: document.querySelector("#splash-screen"),
   enter: document.querySelector("#enter-app"),
   splashHint: document.querySelector("#splash-hint"),
@@ -335,33 +336,22 @@ document.addEventListener("keydown", (event) => {
 ui.previous.addEventListener("click", () => playerReady && player.previousVideo());
 ui.next.addEventListener("click", () => playerReady && player.nextVideo());
 
-function getFullscreenElement() {
-  return document.fullscreenElement || document.webkitFullscreenElement;
-}
-
-ui.expand.addEventListener("click", async () => {
-  try {
-    if (getFullscreenElement()) {
-      const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen;
-      await exitFullscreen?.call(document);
-      return;
-    }
-
-    const requestFullscreen = ui.videoFrame.requestFullscreen || ui.videoFrame.webkitRequestFullscreen;
-    await requestFullscreen?.call(ui.videoFrame);
-  } catch {
-    // El navegador puede rechazar pantalla completa según sus permisos.
-  }
-});
-
-function updateExpandButton() {
-  const expanded = Boolean(getFullscreenElement());
+function setVideoExpanded(expanded) {
+  ui.playerCard.classList.toggle("is-video-expanded", expanded);
+  document.body.classList.toggle("has-expanded-video", expanded);
   ui.expand.classList.toggle("is-expanded", expanded);
   ui.expand.setAttribute("aria-label", expanded ? "Salir de pantalla completa" : "Expandir video");
 }
 
-document.addEventListener("fullscreenchange", updateExpandButton);
-document.addEventListener("webkitfullscreenchange", updateExpandButton);
+ui.expand.addEventListener("click", () => {
+  setVideoExpanded(!ui.playerCard.classList.contains("is-video-expanded"));
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && ui.playerCard.classList.contains("is-video-expanded")) {
+    setVideoExpanded(false);
+  }
+});
 
 ui.shuffle.addEventListener("click", () => {
   if (!playerReady) return;

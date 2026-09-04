@@ -21,6 +21,8 @@ body {
   color: #fff;
 }
 
+body.has-expanded-video { overflow: hidden; }
+
 button, input { font: inherit; }
 
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -345,6 +347,52 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .expand-control:focus-visible {
   border-color: rgba(255, 184, 77, .45);
   color: #ffd287;
+}
+
+.player-card.is-video-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+}
+
+.player-card.is-video-expanded .player-header {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  padding: 0;
+}
+
+.player-card.is-video-expanded .brand-group,
+.player-card.is-video-expanded .timeline,
+.player-card.is-video-expanded .playlist,
+.player-card.is-video-expanded .transport {
+  display: none;
+}
+
+.player-card.is-video-expanded .expand-control {
+  border-color: rgba(255, 255, 255, .3);
+  background: rgba(5, 6, 8, .78);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(0, 0, 0, .65);
+}
+
+.player-card.is-video-expanded .video-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
 }
 
 .video-frame {
