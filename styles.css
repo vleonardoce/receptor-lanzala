@@ -684,11 +684,23 @@ input[type="range"] {
   .app-shell.is-entered {
     min-height: 100svh;
     padding-top: 106px;
+    padding-bottom: 88px;
     align-items: center;
   }
   .corner-brand { top: 12px; left: 22px; gap: 14px; }
-  .app-shell.is-entered .corner-brand { top: 12px; left: 0; gap: 0; }
-  .app-shell.is-entered .receptor-wordmark { top: 10px; left: 22px; }
+  .app-shell.is-entered .corner-brand {
+    top: 12px;
+    left: 0;
+    height: calc(100% - 24px);
+    align-items: flex-start;
+    gap: 0;
+  }
+  .app-shell.is-entered .receptor-wordmark {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .neon-logo { width: 72px; opacity: .82; }
   .receptor-wordmark { width: 126px; border-radius: 10px; }
   .app-shell:not(.is-entered) .corner-brand { transform: translate(-50%, -96%) scale(1); }
