@@ -194,6 +194,10 @@ function startInitialPlayback() {
 function onPlayerStateChange(event) {
   setPlaybackIcon(event.data);
 
+  if (event.data === YT.PlayerState.PLAYING) {
+    player.unloadModule?.("captions");
+  }
+
   if (event.data === YT.PlayerState.CUED && !playlistPrepared) {
     playlistPrepared = true;
     setActiveTrack(initialTrackIndex);
@@ -221,6 +225,7 @@ window.onYouTubeIframeAPIReady = () => {
     height: "100%",
     videoId: "6UhQaoM_sjk",
     playerVars: {
+      cc_load_policy: 0,
       controls: 0,
       disablekb: 1,
       playsinline: 1,
