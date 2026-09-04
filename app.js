@@ -2,8 +2,9 @@ const PLAYLIST_ID = "PLSGypVHffn-w";
 
 const tracks = [
   { id: "6UhQaoM_sjk", title: "Irving O.D ft. Django - Marimba" },
-  { id: "TkDfHGn9e3Y", title: "Irving O.D - Prende y Fuma (En Vivo)" },
+  { id: "JZDhhbKUZFE", title: "Irving O.D ft. Artymaña y A.K.A Problemas - Jodido Tombo" },
   { id: "J6ClaWpOnlQ", title: "Irving O.D - Lo Tenemos" },
+  { id: "TkDfHGn9e3Y", title: "Irving O.D - Prende y Fuma (En Vivo)" },
   { id: "rOvO8TgvIBA", title: "Los Darlings de Huánuco - Marihuana" },
   { id: "lcg_lmI9WCw", title: "Norick Rapper School - I Love" },
   { id: "33MpTofKVI0", title: "Terrateniente - Relajadito" },
@@ -18,10 +19,16 @@ const tracks = [
   { id: "eRua23gK3Rw", title: "Pochi Marambio y Tierra Sur - Mi Marimba" },
   { id: "CxfRmNcBe6M", title: "Dengue Dengue Dengue - Serpiente Dorada" },
   { id: "VZZoX_LDJc4", title: "Olaya Sound System - En Mi Jardín" },
+  { id: "v40QNtdRisw", title: "Ysabel Omega - Rompiendo Cadenas" },
   { id: "nwVChl5eYy8", title: "Arte Oculto en las Calles - Peruvian Legalize" },
   { id: "qxJvElQ72Yo", title: "Asmereir - Gente Ganya" },
   { id: "MSY0vHpVt6s", title: "La Raza - A Mi No Wanna" },
   { id: "3-kTAvXlc_Q", title: "Los Filipz - Positivo" },
+  { id: "mjFovzMwycM", title: "Mixed Culture ft. Perfect Giddimani - Ganja" },
+  { id: "ADnf67yf7iA", title: "Tierra Sur - Hierba Mala (En Vivo)" },
+  { id: "CvyHNgNWfQc", title: "La Renken - Playa Legal" },
+  { id: "3myM1ecIAKQ", title: "Laguna Pai - Canales" },
+  { id: "W38EQO_6DiQ", title: "Temple Sour - Flor la Buena" },
 ];
 
 const initialTrackIndex = Math.floor(Math.random() * tracks.length);
