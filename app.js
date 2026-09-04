@@ -74,6 +74,20 @@ let isSeeking = false;
 let hasEntered = false;
 let playlistPrepared = false;
 let pendingTrackIndex = null;
+let splashLoadProgress = 0;
+
+function renderSplashLoadProgress(value) {
+  const roundedValue = Math.round(value);
+  ui.enter.style.setProperty("--load-progress", `${roundedValue}%`);
+  ui.enter.querySelector("i").textContent = `${roundedValue}%`;
+}
+
+renderSplashLoadProgress(splashLoadProgress);
+const splashLoadTimer = window.setInterval(() => {
+  const remaining = 92 - splashLoadProgress;
+  splashLoadProgress = Math.min(92, splashLoadProgress + Math.max(0.6, remaining * 0.08));
+  renderSplashLoadProgress(splashLoadProgress);
+}, 180);
 
 function formatTime(value) {
   if (!Number.isFinite(value) || value < 0) return "0:00";
@@ -135,14 +149,19 @@ function setPlaybackIcon(state) {
 }
 
 function setSplashReady() {
-  ui.enter.classList.remove("is-loading");
-  ui.enter.querySelector("span").textContent = "ENTRAR";
-  ui.enter.querySelector("i").textContent = "→";
-  ui.enter.disabled = false;
-  ui.enter.setAttribute("aria-busy", "false");
-  ui.enter.setAttribute("aria-label", "Entrar al reproductor");
-  ui.splashHint.textContent = "HAZ CLICK PARA INICIAR EL VIAJE";
-  ui.enter.focus({ preventScroll: true });
+  window.clearInterval(splashLoadTimer);
+  renderSplashLoadProgress(100);
+
+  window.setTimeout(() => {
+    ui.enter.classList.remove("is-loading");
+    ui.enter.querySelector("span").textContent = "ENTRAR";
+    ui.enter.querySelector("i").textContent = "→";
+    ui.enter.disabled = false;
+    ui.enter.setAttribute("aria-busy", "false");
+    ui.enter.setAttribute("aria-label", "Entrar al reproductor");
+    ui.splashHint.textContent = "HAZ CLICK PARA INICIAR EL VIAJE";
+    ui.enter.focus({ preventScroll: true });
+  }, 260);
 }
 
 function onPlayerReady(event) {

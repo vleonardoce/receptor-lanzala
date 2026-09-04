@@ -107,12 +107,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 #enter-app {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: 18px;
   padding: 12px 18px 12px 22px;
   border: 1px solid rgba(111, 224, 138, .48);
   border-radius: 4px;
+  overflow: hidden;
   background: rgba(5, 20, 14, .72);
   color: #dffff0;
   cursor: pointer;
@@ -122,6 +125,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
     inset 0 0 16px rgba(0, 255, 128, .08),
     0 0 16px rgba(0, 255, 128, .12);
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+#enter-app > * {
+  position: relative;
+  z-index: 1;
 }
 
 #enter-app i {
@@ -150,17 +158,23 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: inset 0 0 18px rgba(0, 255, 128, .08), 0 0 20px rgba(0, 255, 128, .1);
 }
 
-#enter-app.is-loading i {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(111, 224, 138, .22);
-  border-top-color: var(--green);
-  border-radius: 50%;
-  animation: enter-loading-spin .8s linear infinite;
+#enter-app.is-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 0;
+  width: var(--load-progress, 0%);
+  background: linear-gradient(90deg, rgba(38, 150, 81, .48), rgba(70, 224, 127, .32));
+  box-shadow: 8px 0 18px rgba(0, 255, 128, .18);
+  transition: width .28s ease-out;
 }
 
-@keyframes enter-loading-spin {
-  to { transform: rotate(360deg); }
+#enter-app.is-loading i {
+  min-width: 28px;
+  color: rgba(223, 255, 240, .72);
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-align: right;
 }
 
 .splash-content small {
