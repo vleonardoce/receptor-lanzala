@@ -36,6 +36,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: #0b0c10;
 }
 
+.app-shell.is-entered {
+  padding-top: 200px;
+}
+
 .ambient-light {
   position: absolute;
   inset: 0;
