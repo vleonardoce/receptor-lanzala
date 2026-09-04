@@ -144,6 +144,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: none;
 }
 
+#enter-app.is-loading:disabled {
+  opacity: .76;
+  border-color: rgba(111, 224, 138, .34);
+  box-shadow: inset 0 0 18px rgba(0, 255, 128, .08), 0 0 20px rgba(0, 255, 128, .1);
+}
+
+#enter-app.is-loading i {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(111, 224, 138, .22);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: enter-loading-spin .8s linear infinite;
+}
+
+@keyframes enter-loading-spin {
+  to { transform: rotate(360deg); }
+}
+
 .splash-content small {
   color: rgba(255, 255, 255, .26);
   font-size: 8px;

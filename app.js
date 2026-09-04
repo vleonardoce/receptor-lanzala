@@ -54,6 +54,7 @@ const ui = {
   shell: document.querySelector(".app-shell"),
   splash: document.querySelector("#splash-screen"),
   enter: document.querySelector("#enter-app"),
+  splashHint: document.querySelector("#splash-hint"),
   loading: document.querySelector("#video-loading"),
   play: document.querySelector("#play-toggle"),
   previous: document.querySelector("#previous"),
@@ -125,6 +126,17 @@ function setPlaybackIcon(state) {
   ui.play.setAttribute("aria-label", playing ? "Pausar" : "Reproducir");
 }
 
+function setSplashReady() {
+  ui.enter.classList.remove("is-loading");
+  ui.enter.querySelector("span").textContent = "ENTRAR";
+  ui.enter.querySelector("i").textContent = "→";
+  ui.enter.disabled = false;
+  ui.enter.setAttribute("aria-busy", "false");
+  ui.enter.setAttribute("aria-label", "Entrar al reproductor");
+  ui.splashHint.textContent = "HAZ CLICK PARA INICIAR EL VIAJE";
+  ui.enter.focus({ preventScroll: true });
+}
+
 function onPlayerReady(event) {
   playerReady = true;
   ui.loading.classList.add("is-hidden");
@@ -158,8 +170,7 @@ function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.CUED && !playlistPrepared) {
     playlistPrepared = true;
     setActiveTrack(initialTrackIndex);
-    ui.enter.disabled = false;
-    ui.enter.focus({ preventScroll: true });
+    setSplashReady();
   }
 
   if (

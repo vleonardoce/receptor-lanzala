@@ -32,7 +32,7 @@
       window.location.replace("http://127.0.0.1:4175/");
     }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260904-2">
+  <link rel="stylesheet" href="styles.css?v=20260904-3">
 </head>
 <body>
   <div class="app-shell">
@@ -65,11 +65,11 @@
 
     <section class="splash-screen" id="splash-screen" aria-label="Portada de entrada">
       <div class="splash-content">
-        <button id="enter-app" type="button" autofocus disabled>
-          <span>ENTRAR</span>
-          <i aria-hidden="true">→</i>
+        <button id="enter-app" class="is-loading" type="button" aria-live="polite" aria-busy="true" aria-label="Preparando reproductor" autofocus disabled>
+          <span>CARGANDO</span>
+          <i aria-hidden="true"></i>
         </button>
-        <small>HAZ CLICK PARA INICIAR EL VIAJE</small>
+        <small id="splash-hint">PREPARANDO EL VIAJE</small>
       </div>
     </section>
 
@@ -162,6 +162,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260904-1"></script>
+  <script src="app.js?v=20260904-2"></script>
 </body>
 </html>
