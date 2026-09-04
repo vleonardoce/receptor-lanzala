@@ -8,6 +8,8 @@
   --green-muted: #3f7a4d;
   --amber: #d8a44a;
   --amber-bright: #ffb84d;
+  --receptor-width: clamp(165px, 19vw, 235px);
+  --receptor-height: calc(var(--receptor-width) * .292);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -39,7 +41,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 .app-shell.is-entered {
-  padding-top: 200px;
+  padding: calc(24px + var(--receptor-height)) 24px 24px;
+  grid-template-rows: auto auto;
+  align-content: safe center;
+  justify-items: center;
+  row-gap: 20px;
+  overflow-y: auto;
 }
 
 .ambient-light {
@@ -73,16 +80,23 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 .app-shell.is-entered .corner-brand {
-  top: 24px;
-  left: 0;
-  width: 100%;
-  justify-content: center;
-  gap: 0;
+  display: contents;
+}
+
+.app-shell.is-entered .neon-logo-slot {
+  position: relative;
+  z-index: 50;
+  grid-row: 1;
+}
+
+.app-shell.is-entered .player-card {
+  grid-row: 2;
+  margin: 0;
 }
 
 .app-shell.is-entered .receptor-wordmark {
   position: absolute;
-  top: 0;
+  top: 24px;
   left: 24px;
   transform: none;
 }
@@ -193,9 +207,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
   pointer-events: none;
 }
 
-.neon-logo {
+.neon-logo-slot {
   width: clamp(92px, 10vw, 142px);
   aspect-ratio: 200 / 225;
+}
+
+.neon-logo {
+  width: 100%;
+  height: 100%;
   opacity: .95;
   filter: drop-shadow(0 0 22px rgba(0, 255, 128, .16));
   transform-origin: 50% 50%;
@@ -243,7 +262,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .receptor-wordmark {
   display: block;
-  width: clamp(165px, 19vw, 235px);
+  width: var(--receptor-width);
   aspect-ratio: 500 / 146;
   overflow: hidden;
   border-radius: 18px;
@@ -791,41 +810,38 @@ input[type="range"] {
 }
 
 @media (max-width: 520px) {
+  :root {
+    --receptor-width: 126px;
+  }
+
   .app-shell { padding: 12px; align-items: start; }
   .app-shell.is-entered {
     min-height: 100svh;
-    padding: 18px 12px;
-    grid-template-rows: auto auto auto;
-    align-items: center;
-    align-content: space-between;
+    padding: calc(18px + var(--receptor-height)) 12px 18px;
+    grid-template-rows: auto auto;
+    align-content: safe center;
     justify-items: center;
-    row-gap: 24px;
+    row-gap: 20px;
   }
   .corner-brand { top: 12px; left: 22px; gap: 14px; }
-  .app-shell.is-entered .corner-brand {
-    display: contents;
-  }
-  .app-shell.is-entered .neon-logo {
-    position: relative;
-    z-index: 50;
+  .app-shell.is-entered .neon-logo-slot {
     grid-row: 1;
   }
   .app-shell.is-entered .player-card {
     grid-row: 2;
-    margin: 0;
   }
   .app-shell.is-entered .receptor-wordmark {
-    position: relative;
+    position: absolute;
     z-index: 50;
-    grid-row: 3;
-    top: auto;
+    top: 18px;
     right: auto;
     bottom: auto;
-    left: auto;
-    transform: none;
+    left: 50%;
+    transform: translateX(-50%);
   }
-  .neon-logo { width: 72px; opacity: .82; }
-  .receptor-wordmark { width: 126px; border-radius: 10px; }
+  .neon-logo-slot { width: 72px; }
+  .neon-logo { opacity: .82; }
+  .receptor-wordmark { border-radius: 10px; }
   .app-shell:not(.is-entered) .corner-brand { transform: translate(-50%, -96%) scale(1); }
   .splash-content { transform: translateY(98px); }
   .player-card { margin: 12px 0; padding: 11px; }
@@ -837,6 +853,15 @@ input[type="range"] {
   .track { padding-block: 7px; font-size: 10px; }
   .control { width: 36px; }
   .control-primary { width: 42px; }
+}
+
+@media (min-width: 521px) and (max-height: 820px) {
+  .neon-logo-slot { width: 92px; }
+
+  .playlist {
+    height: clamp(72px, calc(100svh - 648px), 140px);
+    max-height: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
