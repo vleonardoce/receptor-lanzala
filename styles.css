@@ -80,9 +80,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .app-shell.is-entered .receptor-wordmark {
   position: absolute;
-  top: 50%;
-  left: 30px;
-  transform: translateY(-50%);
+  top: 0;
+  left: 24px;
+  transform: none;
 }
 
 .plant-smoke-layer {
@@ -743,7 +743,7 @@ input[type="range"] {
   }
   .corner-brand { top: 12px; left: 22px; gap: 14px; }
   .app-shell.is-entered .corner-brand { top: 12px; left: 0; gap: 0; }
-  .app-shell.is-entered .receptor-wordmark { left: 22px; }
+  .app-shell.is-entered .receptor-wordmark { top: 10px; left: 22px; }
   .plant-smoke-layer { top: 74px; width: 82vw; }
   .plant-smoke-plume { width: 66px; height: 190px; filter: blur(11px); }
   .neon-logo { width: 72px; opacity: .82; }
