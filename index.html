@@ -32,7 +32,7 @@
       window.location.replace("http://127.0.0.1:4175/");
     }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260904-5">
+  <link rel="stylesheet" href="styles.css?v=20260904-6">
 </head>
 <body>
   <div class="app-shell">
@@ -99,12 +99,11 @@
         <div class="brand-group">
           <span class="brand">LÁNZALA</span>
         </div>
-        <a class="youtube-link" href="https://www.youtube.com/watch?v=6UhQaoM_sjk&amp;list=PLSGypVHffn-w" target="_blank" rel="noreferrer" aria-label="Abrir playlist en YouTube">
-          <svg class="youtube-icon" viewBox="0 0 28 20" aria-hidden="true">
-            <path d="M27.4 3.1A3.5 3.5 0 0 0 25 0.7C22.8 0 18.5 0 14 0S5.2 0 3 .7A3.5 3.5 0 0 0 .6 3.1C0 5.2 0 7.6 0 10s0 4.8.6 6.9A3.5 3.5 0 0 0 3 19.3c2.2.7 6.5.7 11 .7 4.5 0 8.8 0 11-.7a3.5 3.5 0 0 0 2.4-2.4c.6-2.1.6-4.5.6-6.9s0-4.8-.6-6.9Z"></path>
-            <path class="youtube-icon-play" d="m11.2 14.3 7.3-4.3-7.3-4.3v8.6Z"></path>
+        <button class="expand-control" id="expand-video" type="button" aria-label="Expandir video">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.5 4H4v4.5M15.5 4H20v4.5M20 15.5V20h-4.5M8.5 20H4v-4.5"></path>
           </svg>
-        </a>
+        </button>
       </header>
 
       <section class="video-frame" aria-label="Video actual">
@@ -162,6 +161,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260904-6"></script>
+  <script src="app.js?v=20260904-7"></script>
 </body>
 </html>

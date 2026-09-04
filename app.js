@@ -56,6 +56,8 @@ const ui = {
   enter: document.querySelector("#enter-app"),
   splashHint: document.querySelector("#splash-hint"),
   loading: document.querySelector("#video-loading"),
+  videoFrame: document.querySelector(".video-frame"),
+  expand: document.querySelector("#expand-video"),
   play: document.querySelector("#play-toggle"),
   previous: document.querySelector("#previous"),
   next: document.querySelector("#next"),
@@ -271,6 +273,7 @@ window.onYouTubeIframeAPIReady = () => {
       cc_load_policy: 0,
       controls: 0,
       disablekb: 1,
+      fs: 1,
       playsinline: 1,
       rel: 0,
       modestbranding: 1,
@@ -331,6 +334,34 @@ document.addEventListener("keydown", (event) => {
 
 ui.previous.addEventListener("click", () => playerReady && player.previousVideo());
 ui.next.addEventListener("click", () => playerReady && player.nextVideo());
+
+function getFullscreenElement() {
+  return document.fullscreenElement || document.webkitFullscreenElement;
+}
+
+ui.expand.addEventListener("click", async () => {
+  try {
+    if (getFullscreenElement()) {
+      const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen;
+      await exitFullscreen?.call(document);
+      return;
+    }
+
+    const requestFullscreen = ui.videoFrame.requestFullscreen || ui.videoFrame.webkitRequestFullscreen;
+    await requestFullscreen?.call(ui.videoFrame);
+  } catch {
+    // El navegador puede rechazar pantalla completa según sus permisos.
+  }
+});
+
+function updateExpandButton() {
+  const expanded = Boolean(getFullscreenElement());
+  ui.expand.classList.toggle("is-expanded", expanded);
+  ui.expand.setAttribute("aria-label", expanded ? "Salir de pantalla completa" : "Expandir video");
+}
+
+document.addEventListener("fullscreenchange", updateExpandButton);
+document.addEventListener("webkitfullscreenchange", updateExpandButton);
 
 ui.shuffle.addEventListener("click", () => {
   if (!playerReady) return;
