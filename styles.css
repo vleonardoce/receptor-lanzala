@@ -205,11 +205,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .neon-logo .leaf-stem { fill: none; }
 
 .receptor-wordmark {
+  display: block;
   width: clamp(165px, 19vw, 235px);
   aspect-ratio: 500 / 146;
   overflow: hidden;
   border-radius: 18px;
   box-shadow: 0 0 18px rgba(47, 210, 45, .2);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.receptor-wordmark:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
 }
 
 .receptor-wordmark img {
