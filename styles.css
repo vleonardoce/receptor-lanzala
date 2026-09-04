@@ -719,6 +719,10 @@ input[type="range"] {
   .splash-content { transform: translateY(98px); }
   .player-card { margin: 12px 0; padding: 11px; }
   .brand-group { gap: 8px; }
+  .playlist {
+    height: clamp(72px, calc(100svh - 530px), 170px);
+    max-height: none;
+  }
   .track { padding-block: 7px; font-size: 10px; }
   .control { width: 36px; }
   .control-primary { width: 42px; }
